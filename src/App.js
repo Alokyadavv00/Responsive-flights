@@ -135,7 +135,7 @@ const App = () => {
         );
       } else {
         // Attempt to grab flights array
-        const resultFlights = flightsResponse?.data?.flights || [];
+        const resultFlights = flightsResponse?.data?.itineraries || [];
         if (resultFlights.length === 0) {
           setError("No flights found for the specified criteria.");
         }
@@ -209,12 +209,14 @@ const App = () => {
           flights.map((flight, index) => (
             <div key={index} className="flight-card">
               <h3>
-                {flight.airline} {flight.flightNumber}
+                Price: {flight.price.formatted}
               </h3>
+              <p>Duration: {flight.legs[0].durationInMinutes} mins</p>
               <p>
-                Departure: {flight.departureTime} | Arrival: {flight.arrivalTime}
+                Departure: {flight.legs[0].origin.name} ({flight.legs[0].origin.displayCode})
+            	  → Arrival: {flight.legs[0].destination.name} ({flight.legs[0].destination.displayCode})
               </p>
-              <p>Price: {flight.price}</p>
+              <p>Stops: {flight.legs[0].stopCount}</p>
             </div>
           ))
         ) : (
